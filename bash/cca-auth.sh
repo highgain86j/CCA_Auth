@@ -63,7 +63,7 @@ sed -i "s/\"\ /\"\|/g" ${temp1}
 
 sed -i "s/\"//g" ${temp1}
 
-cat ${temp1}
+#cat ${temp1}
 
 cp /dev/null ${temp0}
 
@@ -116,7 +116,7 @@ while read auth_option;
 		echo ""
 	fi
 	if [ "$method" = "none" ]; then
-		echo ${name}" is "${value}" (Type: "${type}")"
+		#echo ${name}" is "${value}" (Type: "${type}")"
 		echo ${type}"|"${name}"|"${value} >> ${temp0}
 		echo ""
 	fi
