@@ -1,3 +1,6 @@
 # CCA_Auth
 Scripts for automating the Cisco Clean Access authentication.
-Requires perl to run.
+The platfrom independent version is writte in perl and requires LWP to run.
+There is also a shell-script version written for Linux users.
+
+Have fun!
