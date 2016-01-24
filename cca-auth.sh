@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 temp0=`mktemp`
 temp1=`mktemp`
 
