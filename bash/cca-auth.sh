@@ -13,6 +13,11 @@ gakuseki=`echo ${auth_info} | awk -F, '{print $1}'`
 anshonum=`echo ${auth_info} | awk -F, '{print $2}'`
 web_url=`echo ${auth_info} | awk -F, '{print $3}'`
 
+if [ -z ${web_url} ]
+	then
+	web_url='http://www.google.com/'
+fi
+
 #echo ${auth_info}
 #echo ${gakuseki}
 #echo ${anshonum}
@@ -150,10 +155,10 @@ while read auth_option;
 done < ${temp1}
 auth_url=`dirname ${auth_url}`
 curl_option=`echo ${curl_option} | sed -e "s/\ /\%20/g"`
-command=`echo curl ${auth_url}/${act} -X ${meth} -d ${curl_option} -v`
+command=`echo curl ${auth_url}/${act} -X ${meth} -A ${gakuseki} -v -d ${curl_option}`
 
-echo "Issueing "${command}
-clear
+echo "Issueing "
+echo `echo ${command} | sed -e "s/${anshonum}/<CENSORED>/g"`
 ${command}
 
 #cat ${temp0}
