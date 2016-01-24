@@ -95,7 +95,7 @@ my $goterr = 0;  # make sure we clear the error flag
 #====================Newly Added on 1.0.8_TDU (From here)======================#
 #==============================================================================#
 # url‚ðŽw’è‚·‚é
-my $url = 'https://auth-nac1.ntwk.dendai.ac.jp/auth/perfigo_weblogin.jsp';
+my $url = 'https://some_server/auth/perfigo_weblogin.jsp';
 
 # Use Chrome/37.0.2062.124 on Windows 7 as User Agent string
 my $user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36";
@@ -169,7 +169,7 @@ sub do_post() {
     }
 
     # Ask the User Agent object to post to the CCA authentication URL.
-    # URL:  https://auth-nac1.ntwk.dendai.ac.jp/auth/perfigo_cm_validate.jsp
+    # URL:  https://some_server/auth/perfigo_cm_validate.jsp
     #       (changed with 1.0.8)
     #       IP Address: 169.234.64.122 (* cannot connect securely without
     #                                     using the hostname)
@@ -206,9 +206,9 @@ sub do_post() {
     # helpButton: Help (fixed, the name of the help button)
     #
     # Results go into the response object (HTTP::Response).
-    my $response = $ua->request(POST 'https://auth-nac1.ntwk.dendai.ac.jp/auth/perfigo_cm_validate.jsp',
+    my $response = $ua->request(POST 'https://some_server/auth/perfigo_cm_validate.jsp',
                                 [reqFrom => 'perfigo_login.jsp',
-                                uri => 'http://web.dendai.ac.jp/',
+                                uri => 'http://www.google.com/',
                                 cm => 'ws32vklm',
                                 userip => $ip,
                                 session => '',
@@ -223,7 +223,7 @@ sub do_post() {
                                 guestPasswordLabel => 'Password',
                                 username => $username,
                                 password => $pwd,
-                                provider => 'TDU User',
+                                provider => 'some_user',
                                 submit => 'Continue',
                                 helpButton => 'Help']);
 

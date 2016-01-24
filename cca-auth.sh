@@ -8,7 +8,7 @@ anshonum=$2
 echo ${gakuseki}
 echo ${anshonum}
 
-echo `curl -G https://auth-nac1.ntwk.dendai.ac.jp 2> /dev/null` > ${temp0}
+echo `curl -G http://www.google.com 2> /dev/null` > ${temp0}
 
 sed -i "s/[\<,\>,\',\"]/\n/g" ${temp0}
 
