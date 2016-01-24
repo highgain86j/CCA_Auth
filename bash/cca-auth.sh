@@ -1,14 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 temp0=`mktemp`
 temp1=`mktemp`
 
-gakuseki=$1
-anshonum=$2
 
-echo ${gakuseki}
-echo ${anshonum}
+cd `echo $(cd $(dirname $0) && pwd)`
 
-echo `curl -G http://www.google.com 2> /dev/null` > ${temp0}
+auth_info=$(openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in ./cca-auth.rsa)
+
+
+
+gakuseki=`echo ${auth_info} | awk -F, '{print $1}'`
+anshonum=`echo ${auth_info} | awk -F, '{print $2}'`
+web_url=`echo ${auth_info} | awk -F, '{print $3}'`
+
+#echo ${auth_info}
+#echo ${gakuseki}
+#echo ${anshonum}
+#echo ${web_url}
+
+sleep 5s
+
+echo `curl -G ${web_url} 2> /dev/null` > ${temp0}
 
 sed -i "s/[\<,\>,\',\"]/\n/g" ${temp0}
 
@@ -86,13 +98,16 @@ while read auth_option;
 		fi
 	done
 	IFS=$IFS_BACKUP
-	if [ ${name} = "username" ]; then
+	if [ ${name} = "username" ];
+		then
 		value=${gakuseki}
 	fi
-	if [ ${name} = "password" ]; then
+	if [ ${name} = "password" ];
+		then
 		value=${anshonum}
 	fi
-	if [ ! "$method" = "none" ]; then
+	if [ ! "$method" = "none" ];
+		then
 		meth=${method}
 		act=${action}
 		echo "HTTP method is "${meth}" ."
@@ -145,3 +160,5 @@ ${command}
 
 rm ${temp0}
 rm ${temp1}
+
+cd ~
