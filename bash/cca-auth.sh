@@ -2,26 +2,50 @@
 temp0=`mktemp`
 temp1=`mktemp`
 
+auth_file="./cca-auth.rsa"
 
 cd `echo $(cd $(dirname $0) && pwd)`
 
-auth_info=$(openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in ./cca-auth.rsa)
 
 
 
-gakuseki=`echo ${auth_info} | awk -F, '{print $1}'`
-anshonum=`echo ${auth_info} | awk -F, '{print $2}'`
-web_url=`echo ${auth_info} | awk -F, '{print $3}'`
+
+
+#echo $1
+#echo $2
+#echo $3
+
+if [ -e ${auth_file} ]
+	then
+		auth_info=$(openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in ${auth_file})
+		gakuseki=`echo ${auth_info} | awk -F, '{print $1}'`
+		anshonum=`echo ${auth_info} | awk -F, '{print $2}'`
+		web_url=`echo ${auth_info} | awk -F, '{print $3}'`
+	else
+		for opts in $1 $2 $3
+			do
+			det_usr=`echo ${opts} | grep "u="`
+			det_pwd=`echo ${opts} | grep "p="`
+			det_url=`echo ${opts} | grep "url="`
+			if [ -n "$det_usr" ]; then
+				gakuseki=`echo ${opts} | awk -F= '{print $2}'`
+			elif [ -n "$det_pwd" ]; then
+				anshonum=`echo ${opts} | awk -F= '{print $2}'`
+			elif [ -n "$det_url" ]; then
+				web_url=`echo ${opts} | awk -F= '{print $2}'`
+			fi
+		done
+fi
 
 if [ -z ${web_url} ]
 	then
-	web_url='http://www.google.com/'
+	web_url='http://ccatest.kubigowa.net/auth-nac1.ntwk.dendai.ac.jp/'
 fi
 
 #echo ${auth_info}
-#echo ${gakuseki}
-#echo ${anshonum}
-#echo ${web_url}
+echo ${gakuseki}
+echo ${anshonum}
+echo ${web_url}
 
 sleep 5s
 
@@ -31,7 +55,7 @@ sed -i "s/[\<,\>,\',\"]/\n/g" ${temp0}
 
 auth_url=`cat ${temp0} | grep URL | sed -e "s/URL[\=]//g" -e "s/1[\;]//g"`
 
-#echo ${auth_url}
+echo ${auth_url}
 
 echo `curl -G ${auth_url} 2> /dev/null` > ${temp0}
 
@@ -155,7 +179,7 @@ while read auth_option;
 done < ${temp1}
 auth_url=`dirname ${auth_url}`
 curl_option=`echo ${curl_option} | sed -e "s/\ /\%20/g"`
-command=`echo curl ${auth_url}/${act} -X ${meth} -A ${gakuseki} -v -d ${curl_option}`
+command=`echo curl ${auth_url}/${act} -X ${meth} -A ${gakuseki} -vv -d ${curl_option}`
 
 echo "Issueing "
 echo `echo ${command} | sed -e "s/${anshonum}/<CENSORED>/g"`
