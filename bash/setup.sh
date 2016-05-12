@@ -5,6 +5,7 @@ id_rsa=$HOME/.ssh/id_rsa
 if [ ! -e ${id_rsa} ];
 	then
 		echo ${id_rsa}' does not exist. Run "ssh-keygen" and try again.'
+		exit 1
 fi
 echo -n "Student ID?:"
 read student_id
