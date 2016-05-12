@@ -131,7 +131,7 @@ while read auth_option;
 	if [ "$method" = "none" ]; then
 		#echo ${name}" is "${value}" (Type: "${type}")"
 		echo ${type}"|"${name}"|"${value} >> ${temp0}
-		echo ""
+		#echo ""
 	fi
 	method="none"
 	action="none"
