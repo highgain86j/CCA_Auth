@@ -18,12 +18,20 @@ if [ -z ${web_url} ]
 	web_url='http://www.google.com/'
 fi
 
+if [ -z `which curl` ]
+	then
+	echo "curl is missing"
+	exit 1
+fi
+
 #echo ${auth_info}
 #echo ${gakuseki}
 #echo ${anshonum}
 #echo ${web_url}
 
-sleep 5s
+#sleep 5s
+
+
 
 echo `curl -G ${web_url} 2> /dev/null` > ${temp0}
 
