@@ -69,6 +69,7 @@
 # Initial release.
 
 use strict;
+use warnings;
 use LWP 5.64;
 use HTTP::Request::Common;
 use LWP::UserAgent;
@@ -94,13 +95,13 @@ my $goterr = 0;  # make sure we clear the error flag
 #==============================================================================#
 #====================Newly Added on 1.0.8_TDU (From here)======================#
 #==============================================================================#
-# url‚ğw’è‚·‚é
+# urlã‚’æŒ‡å®šã™ã‚‹
 my $url = 'https://some_server/auth/perfigo_weblogin.jsp';
 
 # Use Chrome/37.0.2062.124 on Windows 7 as User Agent string
 my $user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36";
 
-# LWP‚ğg‚Á‚ÄƒTƒCƒg‚ÉƒAƒNƒZƒX‚µAHTML‚Ì“à—e‚ğæ“¾‚·‚é
+# LWPã‚’ä½¿ã£ã¦ã‚µã‚¤ãƒˆã«ã‚¢ã‚¯ã‚»ã‚¹ã—ã€HTMLã®å†…å®¹ã‚’å–å¾—ã™ã‚‹
 my $ua = LWP::UserAgent->new('agent' => $user_agent);
 my $res = $ua->get($url);
 my $content = $res->content;
